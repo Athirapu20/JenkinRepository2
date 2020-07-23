@@ -14,7 +14,7 @@ def TEST_LEVEL='RunLocalTests'
     println SFDC_HOST
     println CONNECTED_APP_CONSUMER_KEY
     def toolbelt = tool 'toolbelt'
-
+    println toolbelt
     stage('checkout source') {
         // when running in multi-branch job, one must issue this command
         checkout scm
@@ -27,8 +27,7 @@ def TEST_LEVEL='RunLocalTests'
             // -------------------------------------------------------------------------
 
             stage('Authorize DevHub') {
-                rc = command "${toolbelt}/sfdx force:auth:jwt:grant --instanceurl ${SFDC_HOST} --clientid ${CONNECTED_APP_CONSUMER_KEY} 
-                --username ${SF_USERNHUB_ORGAME} --jwtkeyfile ${JWT_KEY_CRED_ID} --setdefaultdevhubusername --setalias HubOrg"
+                rc = command "${toolbelt}/sfdx force:auth:jwt:grant --instanceurl ${SFDC_HOST} --clientid ${CONNECTED_APP_CONSUMER_KEY}  --username ${SF_USERNHUB_ORGAME} --jwtkeyfile ${JWT_KEY_CRED_ID} --setdefaultdevhubusername --setalias HubOrg"
                 if (rc != 0) {
                     error 'Salesforce dev hub org authorization failed.'
                 }
